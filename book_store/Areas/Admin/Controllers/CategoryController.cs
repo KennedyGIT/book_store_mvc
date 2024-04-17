@@ -1,53 +1,54 @@
 ﻿using bookstore.Models;
 using Microsoft.AspNetCore.Mvc;
-using bookstore.DataAccess.Data;
+using bookstore.DataAccess.Repository.IRepository;
 
-namespace book_store.Controllers
+namespace book_store.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly BookStoreDBContext ctx;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CategoryController(BookStoreDBContext ctx)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            this.ctx = ctx;
+            this.unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            var categories = ctx.Categories.ToList();
+            var categories = unitOfWork.Category.GetAll();
             return View(categories);
         }
 
         public IActionResult Create()
         {
-            return View ();
+            return View();
         }
 
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                ctx.Categories.Add(category);
-                ctx.SaveChanges();
+                unitOfWork.Category.Add(category);
+                unitOfWork.Save();
                 TempData["success"] = "Category Added Successfully";
                 return RedirectToAction("Index");
             }
 
             return View();
-           
+
         }
 
         public IActionResult Edit(int id)
         {
-            if (id == null || id == 0) 
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            Category? category = ctx.Categories.Find(id);
+            Category? category = unitOfWork.Category.Get(c => c.Id == id);
 
-            if(category == null) 
+            if (category == null)
             {
                 return NotFound();
             }
@@ -58,10 +59,10 @@ namespace book_store.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                ctx.Categories.Update(category);
-                ctx.SaveChanges();
+                unitOfWork.Category.Update(category);
+                unitOfWork.Save();
                 TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
@@ -77,7 +78,7 @@ namespace book_store.Controllers
                 return NotFound();
             }
 
-            Category? category = ctx.Categories.Find(id);
+            Category? category = unitOfWork.Category.Get(c => c.Id == id);
 
             if (category == null)
             {
@@ -90,16 +91,16 @@ namespace book_store.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteCategory(int? id)
         {
-            Category? category = ctx.Categories.Find(id);
+            Category? category = unitOfWork.Category.Get(c => c.Id == id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            ctx.Categories.Remove(category);
+            unitOfWork.Category.Remove(category);
 
-            ctx.SaveChanges();
+            unitOfWork.Save();
 
             TempData["success"] = "Category Deleted Successfully";
 

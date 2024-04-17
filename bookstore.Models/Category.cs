@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
+﻿using bookstore.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace bookstore.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(30, ErrorMessage = "Maximum length should not be more than 30")]
