@@ -1,6 +1,6 @@
-﻿using book_store.Data;
-using book_store.Models;
+﻿using bookstore.Models;
 using Microsoft.AspNetCore.Mvc;
+using bookstore.DataAccess.Data;
 
 namespace book_store.Controllers
 {
@@ -30,6 +30,7 @@ namespace book_store.Controllers
             {
                 ctx.Categories.Add(category);
                 ctx.SaveChanges();
+                TempData["success"] = "Category Added Successfully";
                 return RedirectToAction("Index");
             }
 
@@ -61,6 +62,7 @@ namespace book_store.Controllers
             {
                 ctx.Categories.Update(category);
                 ctx.SaveChanges();
+                TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
 
@@ -85,7 +87,7 @@ namespace book_store.Controllers
             return View(category);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeleteCategory(int? id)
         {
             Category? category = ctx.Categories.Find(id);
@@ -98,6 +100,8 @@ namespace book_store.Controllers
             ctx.Categories.Remove(category);
 
             ctx.SaveChanges();
+
+            TempData["success"] = "Category Deleted Successfully";
 
             return RedirectToAction("Index");
 

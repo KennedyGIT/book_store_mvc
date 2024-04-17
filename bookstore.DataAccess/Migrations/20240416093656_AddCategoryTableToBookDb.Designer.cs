@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using book_store.Data;
+using bookstore.DataAccess.Data;
 
 #nullable disable
 
-namespace book_store.Migrations
+namespace bookstore.DataAccess.Migrations
 {
     [DbContext(typeof(BookStoreDBContext))]
-    [Migration("20240416095216_SeedCatgoriesTable")]
-    partial class SeedCatgoriesTable
+    [Migration("20240416093656_AddCategoryTableToBookDb")]
+    partial class AddCategoryTableToBookDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,32 +42,6 @@ namespace book_store.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DisplayOrder = 1,
-                            Name = "Adventure"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DisplayOrder = 2,
-                            Name = "Fantasy"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DisplayOrder = 3,
-                            Name = "SciFi"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DisplayOrder = 4,
-                            Name = "Thriller"
-                        });
                 });
 #pragma warning restore 612, 618
         }
