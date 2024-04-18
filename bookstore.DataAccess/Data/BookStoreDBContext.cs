@@ -35,7 +35,8 @@ namespace bookstore.DataAccess.Data
                     Price = 12.99,
                     Price50 = 11.99,
                     Price100 = 10.99,
-                    CategoryId = 2
+                    CategoryId = 2,
+                    ImageUrl=""
                 },
                 new Product
                 {
@@ -48,7 +49,8 @@ namespace bookstore.DataAccess.Data
                     Price = 13.99,
                     Price50 = 12.99,
                     Price100 = 11.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -61,7 +63,8 @@ namespace bookstore.DataAccess.Data
                     Price = 10.99,
                     Price50 = 9.99,
                     Price100 = 8.99,
-                    CategoryId = 4
+                    CategoryId = 4,
+                    ImageUrl = ""
 
                 },
                 new Product
@@ -75,7 +78,8 @@ namespace bookstore.DataAccess.Data
                     Price = 8.99,
                     Price50 = 7.99,
                     Price100 = 6.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
 
 
 
@@ -91,7 +95,8 @@ namespace bookstore.DataAccess.Data
                     Price = 12.99,
                     Price50 = 11.99,
                     Price100 = 10.99,
-                    CategoryId = 2
+                    CategoryId = 2,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -104,7 +109,8 @@ namespace bookstore.DataAccess.Data
                     Price = 11.99,
                     Price50 = 10.99,
                     Price100 = 9.99,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    ImageUrl = ""
 
                 },
                 new Product
@@ -118,7 +124,8 @@ namespace bookstore.DataAccess.Data
                     Price = 15.99,
                     Price50 = 14.99,
                     Price100 = 13.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -131,7 +138,8 @@ namespace bookstore.DataAccess.Data
                     Price = 14.99,
                     Price50 = 13.99,
                     Price100 = 12.99,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -144,7 +152,8 @@ namespace bookstore.DataAccess.Data
                     Price = 9.99,
                     Price50 = 8.99,
                     Price100 = 7.99,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -157,7 +166,8 @@ namespace bookstore.DataAccess.Data
                     Price = 11.99,
                     Price50 = 10.99,
                     Price100 = 9.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -170,7 +180,8 @@ namespace bookstore.DataAccess.Data
                     Price = 13.99,
                     Price50 = 12.99,
                     Price100 = 11.99,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -183,7 +194,8 @@ namespace bookstore.DataAccess.Data
                     Price = 10.99,
                     Price50 = 9.99,
                     Price100 = 8.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
 
                 },
                 new Product
@@ -197,7 +209,8 @@ namespace bookstore.DataAccess.Data
                     Price = 11.99,
                     Price50 = 10.99,
                     Price100 = 9.99,
-                    CategoryId = 2
+                    CategoryId = 2,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -210,7 +223,8 @@ namespace bookstore.DataAccess.Data
                     Price = 16.99,
                     Price50 = 15.99,
                     Price100 = 14.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -223,7 +237,8 @@ namespace bookstore.DataAccess.Data
                     Price = 12.99,
                     Price50 = 11.99,
                     Price100 = 10.99,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -236,7 +251,8 @@ namespace bookstore.DataAccess.Data
                     Price = 8.99,
                     Price50 = 7.99,
                     Price100 = 6.99,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -249,7 +265,8 @@ namespace bookstore.DataAccess.Data
                     Price = 11.99,
                     Price50 = 10.99,
                     Price100 = 9.99,
-                    CategoryId = 2
+                    CategoryId = 2,
+                    ImageUrl = ""
                 }
                 );
                 

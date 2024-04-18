@@ -1,7 +1,7 @@
 ﻿using bookstore.Models;
 using Microsoft.AspNetCore.Mvc;
 using bookstore.DataAccess.Repository.IRepository;
-using bookstore.Models;
+using bookstore.Models.ViewModels;
 
 namespace book_store.Areas.Admin.Controllers
 {
@@ -9,68 +9,100 @@ namespace book_store.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             this.unitOfWork = unitOfWork;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            var categories = unitOfWork.Product.GetAll();
-            return View(categories);
+            var products = unitOfWork.Product.GetAll(includeProperties: "Category");
+            
+            return View(products);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            ProductVM productVM = new()
+            {
+                CategoryList = unitOfWork.Category.GetAll(),
+
+                Product = new Product()
+
+            };
+
+            if (id == null || id == 0)
+            {
+                return View(productVM);
+            }
+            else 
+            {
+                productVM.Product = unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Upsert(ProductVM productVm, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Product.Add(product);
+                string wwwRootPath = webHostEnvironment.WebRootPath;
+
+                if(file != null) 
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    if (!string.IsNullOrEmpty(productVm.Product.ImageUrl)) 
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, productVm.Product.ImageUrl.TrimStart('\\'));
+
+                        if(System.IO.File.Exists(oldImagePath)) 
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using(var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create)) 
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productVm.Product.ImageUrl = @"\images\product\" + fileName;
+                }
+
+                if (productVm.Product.Id == 0)
+                {
+                    unitOfWork.Product.Add(productVm.Product);
+                }
+                else 
+                {
+                    unitOfWork.Product.Update(productVm.Product);
+                }
+                
                 unitOfWork.Save();
                 TempData["success"] = "Product Added Successfully";
                 return RedirectToAction("Index");
             }
-
-            return View();
-
-        }
-
-        public IActionResult Edit(int id)
-        {
-            if (id == null || id == 0)
+            else 
             {
-                return NotFound();
-            }
+                ProductVM productVM = new()
+                {
+                    CategoryList = unitOfWork.Category.GetAll(),
+                    Product = new Product()
+                };
 
-            Product? product = unitOfWork.Product.Get(p => p.Id == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                unitOfWork.Product.Update(product);
-                unitOfWork.Save();
-                TempData["success"] = "Product Updated Successfully";
-                return RedirectToAction("Index");
+                return View(productVM);
             }
 
             return View();
 
         }
+
+        
 
         public IActionResult Delete(int? id)
         {
@@ -108,5 +140,15 @@ namespace book_store.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
+
+
+        #region
+        [HttpGet]
+        public IActionResult GetAll() 
+        {
+            List<Product> productListDto = unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new {data =  productListDto});
+        }
+        #endregion
     }
 }
