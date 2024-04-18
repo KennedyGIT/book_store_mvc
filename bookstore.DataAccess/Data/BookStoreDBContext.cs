@@ -1,21 +1,25 @@
 ﻿using bookstore.Models;
-using bookstore.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookstore.DataAccess.Data
 {
-    public class BookStoreDBContext : DbContext
+    public class BookStoreDBContext : IdentityDbContext<IdentityUser>
     {
-        public BookStoreDBContext(DbContextOptions<BookStoreDBContext> options) : base(options) 
+        public BookStoreDBContext(DbContextOptions<BookStoreDBContext> options) : base(options)
         {
 
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           base.OnModelCreating(modelBuilder);
+
            modelBuilder.Entity<Category>().HasData(
                new Category { Id = 1, Name = "Adventure", DisplayOrder = 1},
                new Category { Id = 2, Name = "Fantasy", DisplayOrder = 2 },
