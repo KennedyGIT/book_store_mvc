@@ -105,7 +105,12 @@ namespace book_store.Areas.Admin.Controllers
 
         }
 
-        
+
+        public IActionResult PlaceOrder()
+        {
+            TempData["success"] = "Order Has Been Placed Successfully";
+            return RedirectToAction("Index");
+        }
 
         public IActionResult Delete(int? id)
         {
